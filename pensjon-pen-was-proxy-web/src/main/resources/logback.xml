@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <property name="LOG_HOME" value="${APP_LOG_HOME:-/var/log/opt/apps/pensjon-fss/app}/pen" />
+
+    <appender name="CONSOLE" class="no.nav.provider.fellesreg.tp.java.logging.RedactingAppender">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>[%t, %d, %-5p, %C:%L] - [%X{user},%X{process},%X{transaction},%X{applicationKey},%X{error},%X{errorType}] - %m%n</pattern>
+            </encoder>
+        </appender>
+    </appender>
+
+    <appender name="JSON_LOG" class="no.nav.provider.fellesreg.tp.java.logging.RedactingAppender">
+        <appender class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_HOME}/pensjon-pen-was-proxy.jsonlog</file>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <customFields>{"applicationVersion":"${project.version}","team":"teampensjon"}</customFields>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                <maxIndex>10</maxIndex>
+                <fileNamePattern>${LOG_HOME}/pensjon-pen-was-proxy.%i.jsonlog.zip</fileNamePattern>
+            </rollingPolicy>
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>5MB</maxFileSize>
+            </triggeringPolicy>
+        </appender>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="JSON_LOG"/>
+    </root>
+</configuration>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://appconfig.aura.nav.no" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://appconfig.aura.nav.no http://maven.adeo.no/xsd/appconfig.xsd ">
+	<name>pensjon-fss</name>
+
+	<selftest delayInSeconds="60">
+		<path>/pensjon-ws/internal/selftest</path>
+	</selftest>
+
+	<monitoring>
+		<selftest interval="300"/>
+	</monitoring>
+
+	<artifacts>
+		<ear artifactId="pensjon-pen-was-proxy-root" groupId="no.nav.pensjon.pensjon-pen-was-proxy" name="pen" version="1-SNAPSHOT"/>
+	</artifacts>
+
+	<serverOptions>
+		<jvmArgs>-Xms512m -Xmx1024m -Xmn512m -Xgc:preferredHeapBase=0xFFFE0000 -Xcodecachetotal320mb -Djava.util.Arrays.useLegacyMergeSort=true -Ddefault.client.encoding=UTF-8 -Dfile.encoding=ISO8859-1 -Duser.language=no -Duser.region=NO -Duser.variant=NB -Dcom.ibm.websphere.security.ltpa.disableSECJ0371W=true -Xtgc:compaction,concurrent,parallel -Xjit:verbose -Xtrace -verbosegc -Xdisableexplicitgc</jvmArgs>
+		<customProperties parentObject="TransactionService">
+			<property key="propogatedOrBMTTranLifetimeTimeout" value="7200"/>
+		</customProperties>
+		<customProperties parentObject="ServerCluster">
+			<property key="jsfProvider" value="SunRI1.2"/>
+		</customProperties>
+	</serverOptions>
+
+	<resources>
+		<baseUrl alias="penEndpointNais" mapToProperty="pen.endpoint.nais"/>
+	</resources>
+	
+	<exposed-services>
+		<!-- Exposed REST services (Proxied to nais) -->
+		<exposedRest description="En xml-rest-tjeneste som henter pensjonsinformasjon." name="Pensjonsinformasjon" path="/pensjon-ws/api/pensjonsinformasjon/v1"/>
+		<exposedRest description="Simuleringstjeneste for simulering av alderspensjon" name="SimulerAlderspensjon_v1" path="/pensjon-ws/api/simuler/alderspensjon/v1"/>
+		<exposedRest description="Simuleringstjeneste for simulering av alderspensjon med periodiserte fremtidige inntekter" name="SimulerAlderspensjon_v2" path="/pensjon-ws/api/simuler/alderspensjon/v2"/>
+		<exposedRest description="Simuleringstjeneste for simulering av alderspensjon" name="SimulerAlderspensjon_v3" path="/pensjon-ws/api/simuler/alderspensjon/v3"/>
+		<exposedRest description="Hent tilganger paa sak og foedselsnummer for bruker basert paa sakId." name="HentBrukerOgEnhetstilgangerForSak" path="/pensjon-ws/api/pip/hentBrukerOgEnhetstilgangerForSak/v1"/>
+		<exposedRest description="Tjeneste for behandling av hendelser fra utland" name="BehandleHendelse" path="/pensjon-ws/api/behandlehendelse/utland/v1"/>
+		<exposedRest description="Tjeneste som henter sakInformasjon basert paa aktoerId og ytelsetype" name="BestemSak" path="/pensjon-ws/api/bestemsak/v1"/>
+		<exposedRest description="Tjeneste som henter AFP Privat detaljer for kravId" name="HentAFPPrivatDetaljer" path="/pensjon-ws/api/afpprivatdetaljer/v1"/>
+		<exposedRest description="Tjeneste som henter ut folketrygdsbeholdninger" name="BeregnFolketrygdbeholdning" path="/pensjon-ws/api/beregnFolketrygdbeholdning/v1"/>
+		<exposedRest description="Endepunkt for tjenester eksponert paa grensesnittet Beregning" name="Beregning" path="/pensjon-ws/api/beregning"/>
+		<exposedRest description="Endepunkt for tjenester eksponert paa grensesnittet Person" name="Person" path="/pensjon-ws/api/person"/>
+		<exposedRest description="Endepunkt for tjenester eksponert paa grensesnittet Ytelse" name="Ytelse" path="/pensjon-ws/api/ytelse"/>
+		<exposedRest description="Tjeneste for uthenting av historikken paa ytelsene til en person" name="HentYtelsehistorikk" path="/pensjon-ws/api/ytelse/historikk"/>
+		<exposedRest description="Tjenesten eksponerer vedtaksinformasjon" name="Vedtaksinformasjon" path="/pensjon-ws/api/vedtak/informasjon"/>
+		<exposedRest description="Endepunkt for Afp privat skjema" name="HentSkjemaAfpPrivat" path="/pensjon-ws/api/afpprivatskjema"/>
+	</exposed-services>
+
+</application>
