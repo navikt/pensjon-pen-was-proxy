@@ -42,7 +42,7 @@ public class SelftestResultHtmlWriter implements MessageBodyWriter<SelftestResul
         sb.append(result.getApplication());
         sb.append(" selftest</title>");
         sb.append("<link rel=\"stylesheet\" href=\"../webjars/bootstrap/5.1.0/css/bootstrap.min.css\" />");
-        sb.append("<link rel=\"stylesheet\" href=\"../webjars/bootstrap-icons/1.5.0/font/bootstrap-icons.css\" />");
+        sb.append("<link rel=\"stylesheet\" href=\"../webjars/bootstrap-icons/1.7.0/font/bootstrap-icons.css\" />");
         sb.append("<script src=\"../webjars/bootstrap/5.1.0/js/bootstrap.min.js\"></script>");
         sb.append("<meta charset=\"UTF-8\" />");
         sb.append("</head>");

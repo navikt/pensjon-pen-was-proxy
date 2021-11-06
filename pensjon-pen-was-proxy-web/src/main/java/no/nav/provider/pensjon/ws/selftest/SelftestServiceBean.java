@@ -15,6 +15,7 @@ import java.util.stream.StreamSupport;
 
 import static java.lang.System.nanoTime;
 import static java.time.LocalDate.now;
+import static java.util.Optional.ofNullable;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.stream.Collectors.toList;
 import static no.nav.provider.pensjon.ws.selftest.Check.failure;
@@ -37,7 +38,7 @@ public class SelftestServiceBean implements SelftestService {
                 .map(this::performSelftest)
                 .collect(toList());
 
-        return new SelftestResult("tp-ejb-adapter", getApplicationVersion(), NANOSECONDS.toMillis(nanoTime() - start), now().toString(), checks);
+        return new SelftestResult("pensjon-pen-was-proxy", getApplicationVersion(), NANOSECONDS.toMillis(nanoTime() - start), now().toString(), checks);
     }
 
     private Check performSelftest(final Selftestable selftestable) {
@@ -51,12 +52,7 @@ public class SelftestServiceBean implements SelftestService {
     }
 
     private String getApplicationVersion() {
-        final Properties props = new Properties();
-        try (final InputStream inputStream = getClass().getResourceAsStream("/META-INF/maven/no.nav.pensjon.samhandling.tp-ejb-adapter/tp-ejb-adapter-ejb/pom.properties")) {
-            props.load(inputStream);
-            return props.getProperty("version");
-        } catch (final IOException | RuntimeException ignored) {
-            return "UNKNOWN VERSION";
-        }
+        return ofNullable(getClass().getPackage().getImplementationVersion())
+                .orElse("UNKNOWN VERSION");
     }
 }

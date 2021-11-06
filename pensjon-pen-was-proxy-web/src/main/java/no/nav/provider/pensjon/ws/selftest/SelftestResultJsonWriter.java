@@ -1,10 +1,7 @@
 package no.nav.provider.pensjon.ws.selftest;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
-import javax.json.stream.JsonGeneratorFactory;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -13,6 +10,9 @@ import javax.ws.rs.ext.Provider;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+
+import static no.nav.provider.pensjon.ws.selftest.Check.isFailure;
+import static org.apache.commons.lang3.StringUtils.abbreviate;
 
 @Provider
 @Produces("application/json")
@@ -30,10 +30,10 @@ public class SelftestResultJsonWriter implements MessageBodyWriter<SelftestResul
 
     @Override
     public void writeTo(SelftestResult result, Class aClass, Type type, Annotation[] annotations, MediaType mediaType, MultivaluedMap multivaluedMap, OutputStream outputStream) {
-        JsonGeneratorFactory factory = Json.createGeneratorFactory(null);
+        final JsonGenerator gen = Json.createGeneratorFactory(null).createGenerator(outputStream);
 
-        JsonGenerator gen = factory.createGenerator(outputStream);
-        gen.writeStartObject()
+        gen
+                .writeStartObject()
                 .write("application", result.getApplication())
                 .write("version", result.getVersion())
                 .write("timestamp", result.getTimestamp())
@@ -41,15 +41,19 @@ public class SelftestResultJsonWriter implements MessageBodyWriter<SelftestResul
                 .writeStartArray("checks");
 
         result.getChecks().forEach(check -> {
-            gen.writeStartObject();
-            gen.write("description", check.getDescription());
-            gen.write("endpoint", check.getEndpoint());
-            gen.write("responseTime", check.getResponseTime() == null ? "" : check.getResponseTime() + "ms");
-            gen.write("result", check.getResult());
-            if (Check.isFailure(check)) {
-                gen.write("errorMessage", StringUtils.abbreviate(check.getMessage(), 250));
-                gen.write("stacktrace", StringUtils.abbreviate(check.getStacktrace(), 250));
+            gen
+                    .writeStartObject()
+                    .write("description", check.getDescription())
+                    .write("endpoint", check.getEndpoint())
+                    .write("responseTime", check.getResponseTime() == null ? "" : check.getResponseTime() + "ms")
+                    .write("result", check.getResult());
+
+            if (isFailure(check)) {
+                gen
+                        .write("errorMessage", abbreviate(check.getMessage(), 250))
+                        .write("stacktrace", abbreviate(check.getStacktrace(), 250));
             }
+
             gen.writeEnd();
         });
 

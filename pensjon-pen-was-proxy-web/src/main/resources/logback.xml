@@ -3,15 +3,15 @@
 <configuration>
     <property name="LOG_HOME" value="${APP_LOG_HOME:-/var/log/opt/apps/pensjon-fss/app}/pen" />
 
-    <appender name="CONSOLE" class="no.nav.provider.fellesreg.tp.java.logging.RedactingAppender">
+    <appender name="CONSOLE" class="no.nav.provider.pensjon.ws.logging.RedactingAppender">
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
-                <pattern>[%t, %d, %-5p, %C:%L] - [%X{user},%X{process},%X{transaction},%X{applicationKey},%X{error},%X{errorType}] - %m%n</pattern>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n</pattern>
             </encoder>
         </appender>
     </appender>
 
-    <appender name="JSON_LOG" class="no.nav.provider.fellesreg.tp.java.logging.RedactingAppender">
+    <appender name="JSON_LOG" class="no.nav.provider.pensjon.ws.logging.RedactingAppender">
         <appender class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>${LOG_HOME}/pensjon-pen-was-proxy.jsonlog</file>
             <encoder class="net.logstash.logback.encoder.LogstashEncoder">
@@ -28,6 +28,7 @@
     </appender>
 
     <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="JSON_LOG"/>
     </root>
 </configuration>
