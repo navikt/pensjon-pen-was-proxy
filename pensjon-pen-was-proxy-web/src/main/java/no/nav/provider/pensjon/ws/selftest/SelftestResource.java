@@ -25,7 +25,7 @@ public class SelftestResource {
     private SelftestService selftestService;
 
     @GET
-    @Produces({ APPLICATION_JSON, TEXT_HTML })
+    @Produces({APPLICATION_JSON, TEXT_HTML})
     @PermitAll
     public SelftestResult selftest() throws ExecutionException, InterruptedException {
         return selftestService.getResults();

@@ -11,12 +11,13 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import static no.nav.provider.pensjon.ws.selftest.Check.isFailure;
 import static org.apache.commons.lang3.StringUtils.abbreviate;
 
 @Provider
 @Produces("application/json")
 public class SelftestResultJsonWriter implements MessageBodyWriter<SelftestResult> {
+    private static final int SUCCESS = 0;
+    private static final int WARNING = 2;
 
     @Override
     public boolean isWriteable(Class aClass, Type type, Annotation[] annotations, MediaType mediaType) {
@@ -37,7 +38,7 @@ public class SelftestResultJsonWriter implements MessageBodyWriter<SelftestResul
                 .write("application", result.getApplication())
                 .write("version", result.getVersion())
                 .write("timestamp", result.getTimestamp())
-                .write("aggregateResult", result.getAggregateResult())
+                .write("aggregateResult", result.isSuccess() ? SUCCESS : WARNING)
                 .writeStartArray("checks");
 
         result.getChecks().forEach(check -> {
@@ -46,9 +47,9 @@ public class SelftestResultJsonWriter implements MessageBodyWriter<SelftestResul
                     .write("description", check.getDescription())
                     .write("endpoint", check.getEndpoint())
                     .write("responseTime", check.getResponseTime() == null ? "" : check.getResponseTime() + "ms")
-                    .write("result", check.getResult());
+                    .write("result", check.isSuccess() ? SUCCESS : WARNING);
 
-            if (isFailure(check)) {
+            if (check.isFailure()) {
                 gen
                         .write("errorMessage", abbreviate(check.getMessage(), 250))
                         .write("stacktrace", abbreviate(check.getStacktrace(), 250));

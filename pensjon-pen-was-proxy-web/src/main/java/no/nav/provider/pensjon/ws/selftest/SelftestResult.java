@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static no.nav.provider.pensjon.ws.selftest.SelftestConstants.SUCCESS;
-import static no.nav.provider.pensjon.ws.selftest.SelftestConstants.WARNING;
-
-
 public class SelftestResult {
     private final String application;
     private final String version;
     private final String timestamp;
     private final long executionTime;
-    private final Integer aggregateResult;
+    private final boolean success;
     private final List<Check> checks;
 
     public SelftestResult(final String application, final String version, final long executionTime, final String timestamp, final List<Check> checks) {
@@ -22,7 +18,7 @@ public class SelftestResult {
         this.executionTime = executionTime;
         this.timestamp = timestamp;
         this.checks = new ArrayList<>(checks);
-        this.aggregateResult = checks.stream().anyMatch(Check::isSuccess) ? SUCCESS : WARNING;
+        this.success = checks.stream().allMatch(Check::isSuccess);
     }
 
     public String getApplication() {
@@ -45,7 +41,7 @@ public class SelftestResult {
         return executionTime;
     }
 
-    public Integer getAggregateResult() {
-        return aggregateResult;
+    public boolean isSuccess() {
+        return success;
     }
 }
