@@ -16,6 +16,19 @@
         <module>pensjon-pen-was-proxy-web</module>
     </modules>
 
+    <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <name>NAV Maven2 Internal Repository</name>
+            <url>dav:https://repo.adeo.no/repository/maven-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <name>NAV Maven2 Snapshot Repository</name>
+            <url>https://repo.adeo.no/repository/maven-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.min-version>3.6</maven.min-version>
