@@ -7,12 +7,14 @@ import javax.ejb.Singleton;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
+import java.util.jar.Manifest;
 import java.util.stream.StreamSupport;
 
 import static java.lang.System.nanoTime;
 import static java.time.LocalDate.now;
-import static java.util.Optional.ofNullable;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.stream.Collectors.toList;
 import static no.nav.provider.pensjon.ws.selftest.Check.failure;
@@ -49,7 +51,13 @@ public class SelftestServiceBean implements SelftestService {
     }
 
     private String getApplicationVersion() {
-        return ofNullable(getClass().getPackage().getImplementationVersion())
-                .orElse("UNKNOWN VERSION");
+        final Properties pomProperties = new Properties();
+        try (final InputStream pomPropertiesStream = getClass().getClassLoader().getResourceAsStream("/META-INF/maven/no.nav.pensjon.pensjon-pen-was-proxy/pensjon-pen-was-proxy-web/pom.properties")) {
+            pomProperties.load(pomPropertiesStream);
+            return pomProperties.getProperty("version");
+        } catch (final Exception ignored) {
+            logger.error("Foo", ignored);
+            return "UNKNOWN VERSION";
+        }
     }
 }
