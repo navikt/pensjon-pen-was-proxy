@@ -7,8 +7,6 @@
     <artifactId>pensjon-pen-was-proxy-root</artifactId>
     <packaging>pom</packaging>
     <version>1-SNAPSHOT</version>
-    <name>NAV :: PESYS</name>
-    <description>Root POM for Pesys</description>
 
     <modules>
         <module>pensjon-pen-was-proxy-appconfig</module>
