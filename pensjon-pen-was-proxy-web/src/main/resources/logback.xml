@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
-    <property name="LOG_HOME" value="${APP_LOG_HOME:-/var/log/opt/apps/pensjon-fss/app}/pen" />
+    <property name="LOG_HOME" value="${APP_LOG_HOME:-/var/log/opt/apps/pensjon-fss/app}" />
 
     <appender name="CONSOLE" class="no.nav.provider.pensjon.ws.logging.RedactingAppender">
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
