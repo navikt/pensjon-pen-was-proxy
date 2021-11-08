@@ -11,7 +11,7 @@
 	</monitoring>
 
 	<artifacts>
-		<ear artifactId="pensjon-pen-was-proxy-root" groupId="no.nav.pensjon.pensjon-pen-was-proxy" name="pen" version="${project.version}"/>
+		<ear artifactId="pensjon-pen-was-proxy-jee" groupId="no.nav.pensjon.pensjon-pen-was-proxy" name="pen" version="${project.version}"/>
 	</artifacts>
 
 	<serverOptions>
