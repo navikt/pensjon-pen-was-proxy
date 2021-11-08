@@ -15,7 +15,7 @@
 	</artifacts>
 
 	<serverOptions>
-		<jvmArgs>-Xms512m -Xmx1024m -Xmn512m -Xgc:preferredHeapBase=0xFFFE0000 -Xcodecachetotal320mb -Djava.util.Arrays.useLegacyMergeSort=true -Ddefault.client.encoding=UTF-8 -Dfile.encoding=ISO8859-1 -Duser.language=no -Duser.region=NO -Duser.variant=NB -Dcom.ibm.websphere.security.ltpa.disableSECJ0371W=true -Xtgc:compaction,concurrent,parallel -Xjit:verbose -Xtrace -verbosegc -Xdisableexplicitgc</jvmArgs>
+		<jvmArgs>-Xms512m -Xmx1024m -Xgc:preferredHeapBase=0xFFFE0000 -Xcodecachetotal320mb -Djava.util.Arrays.useLegacyMergeSort=true -Ddefault.client.encoding=UTF-8 -Dfile.encoding=ISO8859-1 -Duser.language=no -Duser.region=NO -Duser.variant=NB -Dcom.ibm.websphere.security.ltpa.disableSECJ0371W=true -Xtgc:compaction,concurrent,parallel -Xjit:verbose -Xtrace -verbosegc -Xdisableexplicitgc</jvmArgs>
 		<customProperties parentObject="TransactionService">
 			<property key="propogatedOrBMTTranLifetimeTimeout" value="7200"/>
 		</customProperties>
