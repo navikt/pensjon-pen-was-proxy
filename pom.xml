@@ -30,7 +30,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.min-version>3.6</maven.min-version>
-        <logback.version>1.2.6</logback.version>
+        <logback.version>1.2.9</logback.version>
         <logstash-logback-encoder.version>6.6</logstash-logback-encoder.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
