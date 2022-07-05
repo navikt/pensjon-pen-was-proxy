@@ -6,7 +6,7 @@
     <groupId>no.nav.pensjon.pensjon-pen-was-proxy</groupId>
     <artifactId>pensjon-pen-was-proxy-root</artifactId>
     <packaging>pom</packaging>
-    <version>1-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <modules>
         <module>pensjon-pen-was-proxy-appconfig</module>
@@ -16,15 +16,9 @@
 
     <distributionManagement>
         <repository>
-            <id>maven-releases</id>
-            <name>NAV Maven2 Internal Repository</name>
-            <url>dav:https://repo.adeo.no/repository/maven-releases</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/navikt/pesys-esb-wsclient</url>
         </repository>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <name>NAV Maven2 Snapshot Repository</name>
-            <url>https://repo.adeo.no/repository/maven-snapshots</url>
-        </snapshotRepository>
     </distributionManagement>
 
     <properties>
@@ -42,6 +36,7 @@
         <wagon-webdav-jackrabbit.version>3.4.3</wagon-webdav-jackrabbit.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <revision>1-SNAPSHOT</revision>
     </properties>
 
     <dependencyManagement>
@@ -167,12 +162,5 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
         </plugins>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-webdav-jackrabbit</artifactId>
-                <version>${wagon-webdav-jackrabbit.version}</version>
-            </extension>
-        </extensions>
     </build>
 </project>
