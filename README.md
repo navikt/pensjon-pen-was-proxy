@@ -1,3 +1,7 @@
+> [!NOTE]
+> HTTP spørringene som denne tidligere videresendte går nå direkte til pensjon-pen. Applikasjonen er ikke lengre i bruk
+
+
 Applikasjon som videresender all HTTP spørringer mottatt som pensjon-pen på IBM Websphere
 til pensjon-pen på nais.
 
